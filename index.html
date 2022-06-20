@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Type Hinting</title>
+    <script src="hinting_script.js"></script>
+</head>
+<body>
+    <fieldset>
+        <legend>Type Hinting</legend>
+        <label for="input_name">Name : </label>
+        <input type="text" name="input_name" id="input_name" placeholder="Type here...">
+        <!-- <input type="submit"> -->
+        <div id="affiche_resultat"></div>
+    </fieldset>
+
+    <script>
+    let mybody = document.getElementById('affiche_resultat')
+    let myinput = document.getElementById('input_name')
+
+    function affiche_le_name(el){
+        // console.log(el)
+        mybody.innerHTML = el.length+" resultats."
+        let mylist = document.createElement('ol')
+        mybody.appendChild(mylist)
+        if (el.length < 50){
+            for (let i = 0; i < el.length; i++) {
+                let returned_result = document.createElement('li')
+                returned_result.innerHTML = el[i]
+                mylist.appendChild(returned_result)
+            }
+        }
+    }
+    
+    myinput.addEventListener('input', function(e){
+    e.preventDefault();
+    // mybody.innerHTML = this.value;
+    fetch('/url?k='+this.value)
+    // /url/:p ==> req.params.p
+    // /url?p=p ==> req.query.p
+    .then(
+        response => response.json()
+    )
+    .then(
+        response => affiche_le_name(response),
+    )
+    .catch(
+        function(err){
+            console.log(err.message)
+    });
+    })
+
+    </script>
+</body>
+</html>
