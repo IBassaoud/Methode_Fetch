@@ -19,7 +19,6 @@ app.get("/", function(req, res){
 
 // });
 //##########  ##########
-//Affiche tout les éléments contenue dans mon tableau parkings
 app.get('/url/', function(req, res) {
     let fin = req.query.k.length
     let result = mydata.filter( n => n.substring(0, fin) == req.query.k)
